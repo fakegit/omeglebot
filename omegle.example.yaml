@@ -1,0 +1,29 @@
+verbosity: 0
+threads: 10
+proxy_source: 
+enable_logs: true
+solve_captchas: true
+
+chat_timeout:
+    connect: 15
+    response: 30
+
+proxy_timeout:
+    used: 60
+    banned: 24*60*60
+    reload: 10*60
+
+captcha:
+    service: nonocaptcha
+    2captcha:
+        api_key:
+    anticaptcha:
+        api_key:
+
+data:
+    responses: data/chat.txt
+    urls: data/domains.txt
+
+log:
+    chats: data/logs/chats.txt
+    events: data/logs/events.txt

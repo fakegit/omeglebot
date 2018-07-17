@@ -1,0 +1,4 @@
+[Message 1]
+1: {heyy|hii|helloo|hi there|hello|hey there|hello there}
+2: how are you!?
+3: BYE
