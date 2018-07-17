@@ -50,7 +50,7 @@ class Handler(EventHandler):
         pageurl = f"http://{client.server}.omegle.com/"
         sitekey = var[0]
         solve_url = (
-            f"http://mikeyy.com/solve?pageurl={pageurl}&sitekey={sitekey}"
+            f"http://...TODO...?pageurl={pageurl}&sitekey={sitekey}"
         )
         try:
             async with aiohttp.ClientSession() as session:
