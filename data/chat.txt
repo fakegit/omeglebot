@@ -1,4 +1,5 @@
 [Message 1]
-1: {heyy|hii|helloo|hi there|hello|hey there|hello there}
-2: how are you!?
-3: BYE
+1: {hey|hi|hello}
+2: [bot_match]
+3: {how are you|whats up|asl}
+4: {goodbye|buh-bye|BYE}
