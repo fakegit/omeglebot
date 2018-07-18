@@ -1,5 +1,6 @@
 import asyncio
 import aiohttp
+import json
 import logging
 import random
 import time
@@ -71,7 +72,7 @@ class Chat(object):
         self.timeout = self.manager.response_timeout + time.time()
         while not self.disconnected:
             if self.timeout <= time.time():
-                self.log("chat time-out", verbosity=5)
+                self.log("chat time-out")
                 await self.disconnect()
                 self.disconnected = True
             await asyncio.sleep(1)
@@ -90,10 +91,10 @@ class Chat(object):
             response = await util.post_request(
                         f"http://{self.server}.omegle.com/{page}",
                         proxy=self.proxy,
-                        data=payload,
+                        payload=payload,
                         timeout=self.manager.connect_timeout,
             )
-            return response
+            return json.loads(response)
         except BaseException:
             pass
 
@@ -147,14 +148,5 @@ class Chat(object):
         await self.say(reply)
         self.log(f"sent reply[{self.reply_id}][{segment}]")
 
-    def log(self, message, verbosity=0):
-        if verbosity == 5:
-            self.manager.logger.debug(f"{self.session_id} {message}")
-        if verbosity == 4:
-            self.manager.logger.info(f"{self.session_id} {message}")
-        if verbosity == 3:
-            self.manager.logger.warning(f"{self.session_id} {message}")
-        if verbosity == 2:
-            self.manager.logger.error(f"{self.session_id} {message}")
-        if verbosity == 1:
-            self.manager.logger.critical(f"{self.session_id} {message}")
+    def log(self, message):
+        self.manager.logger.critical(f"{self.session_id} {message}")

@@ -24,18 +24,8 @@ start = time.time()
 
 class Manager(object):
     logger = logging.getLogger(__name__)
-    verbosity = settings["verbosity"]
-    if verbosity == 0:
-        logger.setLevel("NOTSET")
-    if verbosity == 1:
-        logger.setLevel("CRITICAL")
-    if verbosity == 2:
-        logger.setLevel("ERROR")
-    if verbosity == 3:
-        logger.setLevel("WARNING")
-    if verbosity == 4:
-        logger.setLevel("INFO")
-    if verbosity == 5:
+    debug = settings["debug"]
+    if debug:
         logger.setLevel("DEBUG")
     # Main settings
     threads = settings["threads"]
@@ -51,15 +41,10 @@ class Manager(object):
     reload_timeout = settings["proxy_timeout"]["reload"]
     # Captcha settings
     captcha_service = settings["captcha"]["service"]
+    api_key = settings["captcha"][captcha_service]["api_key"]
     if captcha_service == "anticaptcha":
-        api_key = (
-            captcha_service["anticaptcha"]["api_key"]
-        )
         service = captcha.AntiCaptcha(api_key)
     else:
-        api_key = (
-            captcha_service["2captcha"]["api_key"]
-        )
         service = captcha.TwoCaptcha(api_key)
     # Response data
     responses_data = settings["data"]["responses"]

@@ -1,3 +1,5 @@
+import aiohttp
+
 from random import choice, randint, random, randrange
 from re import compile, findall, match, sub, escape
 
@@ -157,33 +159,31 @@ def wrong_key(s):
         return choice(kwds)
         
         
-async def post_request(url, payload=None, json=None, timeout=180):
+async def post_request(url, payload=None, json=None, proxy=None, timeout=180):
     async with aiohttp.ClientSession() as session:
-    try:
-        async with session.post(
-            url,
-            data=payload,
-            json=json,
-            timeout=timeout,
-        ) as r:
-            if json:
-                return await r.json()
-            return await r.read()
-    except BaseException:
-        raise
+        try:
+            async with session.post(
+                url,
+                data=payload,
+                json=json,
+                proxy=proxy,
+                timeout=timeout,
+            ) as r:
+                return await r.text()
+        except BaseException as e:
+            raise e 
 
 
-async def get_request(url, payload=None, json=None, timeout=180):
+async def get_request(url, payload=None, json=None, proxy=None, timeout=180):
     async with aiohttp.ClientSession() as session:
-    try:
-        async with session.post(
-            url,
-            data=payload,
-            json=json,
-            timeout=timeout,
-        ) as r:
-            if json:
-                return await r.json()
-            return await r.read()
-    except BaseException:
-        raise
+        try:
+            async with session.get(
+                url,
+                data=payload,
+                json=json,
+                proxy=proxy,
+                timeout=timeout,
+            ) as r:
+                return await r.text()
+        except BaseException as e:
+            raise e

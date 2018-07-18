@@ -29,38 +29,42 @@ class Handler(EventHandler):
         self.stranger_typing = False
         if message:
             # client.manager.blacklisted += 1
-            client.log(f"received message", verbosity=5)
+            client.log(f"received message")
             await client.send_reply()
 
     async def strangerDisconnected(self, client, var):
         client.disconnected = True
-        client.log(f"stranger disconnected", verbosity=5)
+        client.log(f"stranger disconnected")
 
     async def typing(self, client, var):
-        client.log(f"stranger is typing", verbosity=5)
+        client.log(f"stranger is typing")
         self.stranger_typing = True
 
     async def stoppedTyping(self, client, var):
-        client.log(f"stranger stopped typing", verbosity=5)
+        client.log(f"stranger stopped typing")
         self.stranger_typing = False
 
     async def recaptchaRequired(self, client, var):
         client.manager.captchas_solving += 1
-        client.log(f"reCAPTCHA required", verbosity=5)
+        client.log("reCAPTCHA required")
         pageurl = f"http://{client.server}.omegle.com/"
         sitekey = var[0]
         try:
-            solution = client.manager.service.solve_captcha(sitekey, pageurl)
-        except BaseException:
+            solution = (
+                await client.manager.service.solve_captcha(sitekey, pageurl)
+            )
+        except BaseException as e:
+            client.log(f"reCAPTCHA solving error: {e}")
             client.disconnected = True
         else:
             if solution:
                 client.recaptcha_required = True
                 client.log(f"reCAPTCHA solution received")
-                await client.recaptcha(j["solution"])
+                await client.recaptcha(solution)
                 client.log(f"reCAPTCHA solution sent")
                 client.manager.captchas_successful += 1
             else:
+                client.log(f"reCAPTCHA solving failure")
                 client.disconnected = True
         client.manager.captchas_solving -= 1
 

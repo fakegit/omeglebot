@@ -51,7 +51,7 @@ async def stats():
         h, m = divmod(m, 60)
         runtime = "%d:%02d:%02d" % (h, m, s)
 
-        if manager.verbosity > 0:
+        if manager.debug:
             await asyncio.sleep(1)
         else:
             sys.stderr.write("\x1b[2J\x1b[H\n\n")
