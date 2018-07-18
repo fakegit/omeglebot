@@ -12,7 +12,7 @@ try:
     with open("omegle.yaml", "r") as f:
         settings = yaml.load(f)
 except FileNotFoundError:
-    print("No config file in directory")
+    print("No config file (omegle.yaml) in directory")
     sys.exit(0)
 
 
