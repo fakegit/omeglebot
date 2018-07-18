@@ -17,10 +17,10 @@ class EventHandler(object):
 
 class Handler(EventHandler):
     async def waiting(self, client, var):
-        client.log(f"waiting")
+        client.log("waiting")
 
     async def connected(self, client, var):
-        client.log(f"connected")
+        client.log("connected")
         client.connected = True
         await client.send_reply()
 
@@ -29,19 +29,19 @@ class Handler(EventHandler):
         self.stranger_typing = False
         if message:
             # client.manager.blacklisted += 1
-            client.log(f"received message")
+            client.log("received message")
             await client.send_reply()
 
     async def strangerDisconnected(self, client, var):
         client.disconnected = True
-        client.log(f"stranger disconnected")
+        client.log("stranger disconnected")
 
     async def typing(self, client, var):
-        client.log(f"stranger is typing")
+        client.log("stranger is typing")
         self.stranger_typing = True
 
     async def stoppedTyping(self, client, var):
-        client.log(f"stranger stopped typing")
+        client.log("stranger stopped typing")
         self.stranger_typing = False
 
     async def recaptchaRequired(self, client, var):
@@ -63,12 +63,12 @@ class Handler(EventHandler):
         else:
             if solution:
                 client.recaptcha_required = True
-                client.log(f"reCAPTCHA solution received")
+                client.log("reCAPTCHA solution received")
                 await client.recaptcha(solution)
-                client.log(f"reCAPTCHA solution sent")
+                client.log("reCAPTCHA solution sent")
                 client.manager.captchas_successful += 1
             else:
-                client.log(f"reCAPTCHA solving failure")
+                client.log("reCAPTCHA solving failure")
                 client.disconnected = True
         client.manager.captchas_solving -= 1
 
