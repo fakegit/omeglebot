@@ -26,7 +26,8 @@ class Handler(EventHandler):
         client.timeout = client.manager.response_timeout + time.time()
         self.stranger_typing = False
         if message:
-            if client.manager.bot_match in message:
+            client.manager.blacklist.append(client.manager.bot_match)
+            if message in blacklist:
                 client.disconnect()
                 return
             client.log("received message")

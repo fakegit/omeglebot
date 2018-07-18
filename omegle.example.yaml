@@ -24,7 +24,9 @@ captcha:
 data:
     responses: data/chat.txt
     urls: data/domains.txt
+    blacklist: data/blacklist.txt
 
+# TODO
 log:
     chats: data/logs/chats.txt
     events: data/logs/events.txt
