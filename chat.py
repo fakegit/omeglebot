@@ -35,6 +35,7 @@ class Chat(object):
         await self.connect()
 
     async def connect(self):
+        self.log(f"Connecting with proxy {self.proxy}")
         randid = "".join(
             random.choice("23456789ABCDEFGHJKLMNPQRSTUVWXYZ") for x in range(8)
         )
