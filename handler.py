@@ -49,18 +49,22 @@ class Handler(EventHandler):
         client.log(f"reCAPTCHA required")
         pageurl = f"http://{client.server}.omegle.com/"
         sitekey = var[0]
-        solve_url = (
-            f"http://...TODO...?pageurl={pageurl}&sitekey={sitekey}"
-        )
+        if client.manager.captcha_service == "anticaptcha":
+            api_key = (
+                client.manager.captcha_service["anticaptcha"]["api_key"]
+            )
+            service = captcha.AntiCaptcha(api_key)
+        else:
+            api_key = (
+                client.manager.captcha_service["2captcha"]["api_key"]
+            )
+            service = captcha.TwoCaptcha(api_key)
         try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(solve_url, timeout=180) as r:
-                    j = await r.json()
+            solution = service.solve_captcha(sitekey, pageurl)
         except BaseException:
             client.disconnected = True
             return
-
-        if "solution" in j:
+        if solution:
             client.recaptcha_required = True
             client.log(f"reCAPTCHA solution received")
             await client.recaptcha(j["solution"])
