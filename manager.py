@@ -50,6 +50,16 @@ class Manager(object):
     reload_timeout = settings["proxy_timeout"]["reload"]
     # Captcha settings
     captcha_service = settings["captcha"]["service"]
+    if captcha_service == "anticaptcha":
+        api_key = (
+            captcha_service["anticaptcha"]["api_key"]
+        )
+        service = captcha.AntiCaptcha(api_key)
+    else:
+        api_key = (
+            captcha_service["2captcha"]["api_key"]
+        )
+        service = captcha.TwoCaptcha(api_key)
     # Response data
     responses_data = settings["data"]["responses"]
     spam_urls_data = settings["data"]["urls"]

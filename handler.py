@@ -49,18 +49,8 @@ class Handler(EventHandler):
         client.log(f"reCAPTCHA required")
         pageurl = f"http://{client.server}.omegle.com/"
         sitekey = var[0]
-        if client.manager.captcha_service == "anticaptcha":
-            api_key = (
-                client.manager.captcha_service["anticaptcha"]["api_key"]
-            )
-            service = captcha.AntiCaptcha(api_key)
-        else:
-            api_key = (
-                client.manager.captcha_service["2captcha"]["api_key"]
-            )
-            service = captcha.TwoCaptcha(api_key)
         try:
-            solution = service.solve_captcha(sitekey, pageurl)
+            solution = client.manager.service.solve_captcha(sitekey, pageurl)
         except BaseException:
             client.disconnected = True
         else:
