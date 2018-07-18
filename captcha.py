@@ -2,7 +2,7 @@ from util import get_request, post_request
 
 
 class AntiCaptcha(object):
-    def __init__(self, api_key, max_threads):
+    def __init__(self, api_key):
         self.api_url = "http://api.anti-captcha.com/"
         self.api_key = api_key
 
@@ -44,7 +44,7 @@ class AntiCaptcha(object):
 
 
 class TwoCaptcha(object):
-    def __init__(self, api_key, max_threads):
+    def __init__(self, api_key):
         self.api_url = "http://2captcha.com/"
         self.api_key = api_key
 
