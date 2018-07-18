@@ -40,6 +40,7 @@ class Manager(object):
     banned_timeout = settings["proxy_timeout"]["banned"]
     reload_timeout = settings["proxy_timeout"]["reload"]
     # Captcha settings
+    solve_captchas = settings["captcha"]["solve_captchas"]
     captcha_service = settings["captcha"]["service"]
     api_key = settings["captcha"][captcha_service]["api_key"]
     if captcha_service == "anticaptcha":

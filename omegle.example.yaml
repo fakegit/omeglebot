@@ -2,7 +2,6 @@ debug: true
 threads: 10
 proxy_source: 
 enable_logs: true
-solve_captchas: true
 
 chat_timeout:
     connect: 15
@@ -14,6 +13,7 @@ proxy_timeout:
     reload: 10*60
 
 captcha:
+    solve_captchas: true
     service: 2captcha
     2captcha:
         api_key:
