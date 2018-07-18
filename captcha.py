@@ -50,7 +50,7 @@ class AntiCaptcha(object):
                 time.sleep(5)
             else:
                 break
-        return response["solution"]["gRecaptchaResponse"]
+        return j["solution"]["gRecaptchaResponse"]
 
 
 class TwoCaptcha(object):
