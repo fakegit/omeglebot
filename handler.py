@@ -45,6 +45,10 @@ class Handler(EventHandler):
         self.stranger_typing = False
 
     async def recaptchaRequired(self, client, var):
+        if not client.manager.solve_captchas:
+            client.disconnected = True
+            return
+
         client.manager.captchas_solving += 1
         client.log("reCAPTCHA required")
         pageurl = f"http://{client.server}.omegle.com/"
