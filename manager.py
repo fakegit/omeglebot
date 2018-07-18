@@ -31,7 +31,6 @@ class Manager(object):
     threads = settings["threads"]
     proxy_source = settings["proxy_source"]
     enable_logs = settings["enable_logs"]
-    solve_captchas = settings["solve_captchas"]
     # Chat timeout settings
     connect_timeout = settings["chat_timeout"]["connect"]
     response_timeout = settings["chat_timeout"]["response"]
