@@ -1,4 +1,5 @@
 import json
+import time
 
 from util import get_request, post_request
 
@@ -10,7 +11,9 @@ class AntiCaptcha(object):
 
     async def get_balance(self):
         fields = {"clientKey": self.api_key}
-        response = await post_request(f"{self.api_url}/getBalance", json=fields)
+        response = await post_request(
+            f"{self.api_url}/getBalance", json=fields
+        )
         errorId = int(response["errorId"])
         if errorId > 1:
             return
@@ -38,7 +41,7 @@ class AntiCaptcha(object):
             return
         fields = {"clientKey": self.api_key, "taskId": taskId}
         time.sleep(10)
-        for i in xrange(10):
+        for i in range(10):
             response = await post_request(
                 f"{self.api_url}/getTaskResult", json=fields
             )
@@ -67,7 +70,7 @@ class TwoCaptcha(object):
             cap_id = response.split("|")[-1]
             fields = {"key": self.api_key, "action": "get", "id": cap_id}
             time.sleep(15)
-            for i in xrange1(10):
+            for i in range(10):
                 response = await get_request(
                     f"{self.api_url}/res.php", payload=fields
                 )

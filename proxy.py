@@ -1,8 +1,7 @@
 import time
-import os
 import asyncio
 
-from peewee import *
+from peewee import SqliteDatabase, Model, CharField, BooleanField, IntegerField
 
 
 database_filename = "proxy.db"
@@ -27,8 +26,15 @@ class Proxy(Model):
     last_used = IntegerField(default=0)
     last_banned = IntegerField(default=0)
 
+    def __repr__(self):
+        return (
+            f'Proxy(ip={self.proxy}, active={self.active},',
+            f'alive={self.alive}, last_used={self.last_used},',
+            f'last_banned={self.last_banned})'
+        )
 
-# if os.path.exists(database_filename): os.remove(database_filename)
+
+# import os; if os.path.exists(database_filename): os.remove(database_filename)
 init_db(database_filename)
 
 
@@ -42,7 +48,7 @@ class ProxyDB(object):
     def add(self, proxies):
         def chunks(l, n):
             n = max(1, n)
-            return (l[i : i + n] for i in range(0, len(l), n))
+            return (l[i:i + n] for i in range(0, len(l), n))
 
         q = [proxy.proxy for proxy in Proxy.select(Proxy.proxy)]
         proxies_up = list(set(q) & set(proxies))
@@ -64,8 +70,8 @@ class ProxyDB(object):
         try:
             async with self._lock:
                 proxy = Proxy.get(
-                    (Proxy.active == False)
-                    & (Proxy.alive == True)
+                    (Proxy.active == 0)
+                    & (Proxy.alive == 1)
                     & (Proxy.last_banned <= time.time())
                     & (Proxy.last_used <= time.time())
                 ).proxy
@@ -91,7 +97,7 @@ class ProxyDB(object):
         return query.execute()
 
     def loaded_count(self):
-        query = Proxy.select().where(Proxy.alive == True)
+        query = Proxy.select().where(Proxy.alive == 1)
         return query.count()
 
     def banned_count(self):
@@ -100,16 +106,16 @@ class ProxyDB(object):
 
     def used_count(self):
         query = Proxy.select(Proxy.proxy).where(
-            (Proxy.alive == True)
+            (Proxy.alive == 1)
             & (Proxy.last_banned <= time.time())
-            & ((Proxy.last_used >= time.time()) | (Proxy.active == True))
+            & ((Proxy.last_used >= time.time()) | (Proxy.active == 1))
         )
         return query.count()
 
     def usable_count(self):
         query = Proxy.select(Proxy.proxy).where(
-            (Proxy.active == False)
-            & (Proxy.alive == True)
+            (Proxy.active == 0)
+            & (Proxy.alive == 1)
             & (Proxy.last_banned <= time.time())
             & (Proxy.last_used <= time.time())
         )

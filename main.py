@@ -37,7 +37,7 @@ async def load_proxies():
             async with aiohttp.ClientSession() as session:
                 async with session.post(manager.proxy_source) as r:
                     resp = await r.text()
-        except:
+        except Exception:
             continue
         else:
             proxies.add(resp.split("\n"))
@@ -59,7 +59,7 @@ async def stats():
         Statistics
 . Script Runtime: {}
 . Chats Active: {}
-. Chats Completed: {} 
+. Chats Completed: {}
 . Chats Blacklisted: {}
 . Captchas Solving: {}
 . Captchas Successful: {}
@@ -88,7 +88,6 @@ async def stats():
 async def start_chat():
     server = random.choice(servers)
     proxy = await proxies.get()
-    recaptcha_count = 0
     while 1:
         chat = Chat(manager, server, replies, proxy)
         await chat.start()

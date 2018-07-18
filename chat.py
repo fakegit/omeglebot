@@ -1,7 +1,5 @@
 import asyncio
-import aiohttp
 import json
-import logging
 import random
 import time
 
@@ -41,7 +39,7 @@ class Chat(object):
         )
         page = (
             f"/start?"
-            "caps=recaptcha2&firstevents=1&spid=&randid={randid}&lang=en"
+            f"caps=recaptcha2&firstevents=1&spid=&randid={randid}&lang=en"
         )
         j = await self.open_page(page)
         if j:
