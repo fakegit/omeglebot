@@ -29,24 +29,24 @@ class Handler(EventHandler):
         self.stranger_typing = False
         if message:
             # client.manager.blacklisted += 1
-            client.log(f"received message")
+            client.log(f"received message", verbosity=5)
             await client.send_reply()
 
     async def strangerDisconnected(self, client, var):
         client.disconnected = True
-        client.log(f"stranger disconnected")
+        client.log(f"stranger disconnected", verbosity=5)
 
     async def typing(self, client, var):
-        client.log(f"stranger is typing")
+        client.log(f"stranger is typing", verbosity=5)
         self.stranger_typing = True
 
     async def stoppedTyping(self, client, var):
-        client.log(f"stranger stopped typing")
+        client.log(f"stranger stopped typing", verbosity=5)
         self.stranger_typing = False
 
     async def recaptchaRequired(self, client, var):
         client.manager.captchas_solving += 1
-        client.log(f"reCAPTCHA required")
+        client.log(f"reCAPTCHA required", verbosity=5)
         pageurl = f"http://{client.server}.omegle.com/"
         sitekey = var[0]
         try:

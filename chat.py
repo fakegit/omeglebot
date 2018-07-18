@@ -71,7 +71,7 @@ class Chat(object):
         self.timeout = self.manager.response_timeout + time.time()
         while not self.disconnected:
             if self.timeout <= time.time():
-                self.log("chat time-out")
+                self.log("chat time-out", verbosity=5)
                 await self.disconnect()
                 self.disconnected = True
             await asyncio.sleep(1)
