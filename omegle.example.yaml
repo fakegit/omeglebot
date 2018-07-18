@@ -1,4 +1,4 @@
-verbosity: 0
+debug: true
 threads: 10
 proxy_source: 
 enable_logs: true
