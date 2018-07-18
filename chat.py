@@ -86,18 +86,16 @@ class Chat(object):
     async def open_page(self, page, payload={}):
         if self.session_id:
             payload["id"] = self.session_id
-
-        async with aiohttp.ClientSession() as session:
-            try:
-                async with session.post(
-                    f"http://{self.server}.omegle.com/{page}",
-                    proxy=self.proxy,
-                    data=payload,
-                    timeout=self.manager.connect_timeout,
-                ) as r:
-                    return await r.json()
-            except BaseException:
-                pass
+        try:
+            response = await util.post_request(
+                        f"http://{self.server}.omegle.com/{page}",
+                        proxy=self.proxy,
+                        data=payload,
+                        timeout=self.manager.connect_timeout,
+            )
+            return response
+        except BaseException:
+            pass
 
     async def recaptcha(self, solution):
         await self.open_page("recaptcha", payload={"response": solution})
