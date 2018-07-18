@@ -43,6 +43,7 @@ connectives = [
 ]
 
 
+
 def spin_content(content):
     start = content.find("{")
     end = content.find("}")
@@ -91,61 +92,49 @@ def generate_typos(s, safe):
                 wrong_vowel(word),
             ]
         )
-
         if kwd:
             words[_words[i][0]] = kwd
-
     return " ".join(words)
 
 
 def inserted_key(s):
     kwds = []
-
     for i in range(0, len(s)):
         for char in alphabet:
             kwds.append(s[: i + 1] + char + s[i + 1 :])
-
     return choice(kwds)
 
 
 def skip_letter(s):
     kwds = []
-
     for i in range(1, len(s) + 1):
         kwds.append(s[: i - 1] + s[i:])
-
     if kwds:
         return choice(kwds)
 
 
 def double_letter(s):
     kwds = []
-
     for i in range(0, len(s) + 1):
         kwds.append(s[:i] + s[i - 1] + s[i:])
-
     if kwds:
         return choice(kwds)
 
 
 def reverse_letter(s):
     kwds = []
-
     for i in range(1, len(s) - 1):
         letters = s[i - 1 : i + 1 : 1]
         if len(letters) != 2:
             continue
-
         reverse_letters = letters[1] + letters[0]
         kwds.append(s[: i - 1] + reverse_letters + s[i + 1 :])
-
     if kwds:
         return choice(kwds)
 
 
 def wrong_vowel(s):
     kwds = []
-
     for i in range(0, len(s)):
         for letter in vowels:
             if s[i] in vowels:
@@ -154,18 +143,47 @@ def wrong_vowel(s):
                     s_list[i] = vowel
                     kwd = "".join(s_list)
                     kwds.append(kwd)
-
     if kwds:
         return choice(kwds)
 
 
 def wrong_key(s):
     kwds = []
-
     for i in range(0, len(s)):
         for letter in alphabet:
             kwd = s[:i] + letter + s[i + 1 :]
             kwds.append(kwd)
-
     if kwds:
         return choice(kwds)
+        
+        
+async def post_request(url, payload=None, json=None, timeout=180):
+    async with aiohttp.ClientSession() as session:
+    try:
+        async with session.post(
+            url,
+            data=payload,
+            json=json,
+            timeout=timeout,
+        ) as r:
+            if json:
+                return await r.json()
+            return await r.read()
+    except BaseException:
+        raise
+
+
+async def get_request(url, payload=None, json=None, timeout=180):
+    async with aiohttp.ClientSession() as session:
+    try:
+        async with session.post(
+            url,
+            data=payload,
+            json=json,
+            timeout=timeout,
+        ) as r:
+            if json:
+                return await r.json()
+            return await r.read()
+    except BaseException:
+        raise
