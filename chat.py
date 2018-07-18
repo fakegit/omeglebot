@@ -137,7 +137,9 @@ class Chat(object):
 
     async def prepare_reply(self, segment, reply):
         segment += 1
-        safe = {"bot_match": "[bot_match]"}
+        safe = {
+            "bot_match": "[bot_match]"
+        }
         reply = reply.replace(safe["bot_match"], self.bot_match)
         reply = util.generate_typos(util.spin_content(reply), safe)
         self.log(f"simulating typing for reply[{self.reply_id}][{segment}]")
