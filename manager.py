@@ -4,6 +4,7 @@
 import logging
 import sys
 import time
+import captcha
 
 try:
     import yaml
