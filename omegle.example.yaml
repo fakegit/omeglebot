@@ -14,7 +14,7 @@ proxy_timeout:
     reload: 10*60
 
 captcha:
-    service: nonocaptcha
+    service: 2captcha
     2captcha:
         api_key:
     anticaptcha:
