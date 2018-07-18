@@ -123,6 +123,7 @@ class Chat(object):
                 pass
             else:
                 for segment, reply in enumerate(segments):
+                    print(reply)
                     await self.prepare_reply(segment, reply)
                     await asyncio.sleep(random.uniform(1.0, 3.0))
         if self.reply_id == self.last_reply_id:
@@ -138,7 +139,7 @@ class Chat(object):
         safe = {
             "bot_match": "[bot_match]"
         }
-        reply = reply.replace(safe["bot_match"], self.bot_match)
+        reply = reply.replace(safe["bot_match"], self.manager.bot_match)
         reply = util.generate_typos(util.spin_content(reply), safe)
         self.log(f"simulating typing for reply[{self.reply_id}][{segment}]")
         asyncio.ensure_future(self.typing())
