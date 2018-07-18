@@ -12,12 +12,15 @@ authors = (("Michael Mooney", "mikeyy@mikeyy.com"),)
 
 authors_email = ", ".join("{}".format(email) for _, email in authors)
 
-__license__ = "GPL-3.0"
+__license__ = "MPL-2.0"
 __author__ = ", ".join(
     "{} <{}>".format(name, email) for name, email in authors
 )
 
-package_info = "Omegle bot..."
+package_info = (
+    "An Omegle bot in Python with typo generation, content spinning,",
+    "asynchronicity, and Proxy management."
+)
 __maintainer__ = __author__
 
 __all__ = (
