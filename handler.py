@@ -63,15 +63,15 @@ class Handler(EventHandler):
             solution = service.solve_captcha(sitekey, pageurl)
         except BaseException:
             client.disconnected = True
-            return
-        if solution:
-            client.recaptcha_required = True
-            client.log(f"reCAPTCHA solution received")
-            await client.recaptcha(j["solution"])
-            client.log(f"reCAPTCHA solution sent")
-            client.manager.captchas_successful += 1
         else:
-            client.disconnected = True
+            if solution:
+                client.recaptcha_required = True
+                client.log(f"reCAPTCHA solution received")
+                await client.recaptcha(j["solution"])
+                client.log(f"reCAPTCHA solution sent")
+                client.manager.captchas_successful += 1
+            else:
+                client.disconnected = True
         client.manager.captchas_solving -= 1
 
     async def recaptchaRejected(self, client, var):
