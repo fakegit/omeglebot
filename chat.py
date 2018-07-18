@@ -15,7 +15,6 @@ class Chat(object):
     replying = False
     recaptcha_required = False
     reply_id = 1
-    bot_match = "i'm a bot"
 
     def __init__(self, manager, server, replies, proxy=None):
         self.manager = manager

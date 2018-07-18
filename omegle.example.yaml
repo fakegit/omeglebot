@@ -1,7 +1,8 @@
 debug: true
-threads: 10
-proxy_source: 
 enable_logs: true
+threads: 10
+proxy_source:
+bot_match: this is my bot # Will disconnect if a reply contains this string
 
 chat_timeout:
     connect: 15
