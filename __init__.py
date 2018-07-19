@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os.path
-import sys
-
 version_info = (0, 0, 2)
 __version__ = "{}.{}.{}".format(*version_info)
 

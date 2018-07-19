@@ -52,7 +52,7 @@ class Manager(object):
     # Response data
     responses_data = settings["data"]["responses"]
     spam_urls_data = settings["data"]["urls"]
-    blacklist =  open(settings["data"]["blacklist"]).read().split('\n')
+    blacklist = open(settings["data"]["blacklist"]).read().split('\n')
     # Logging data (TODO)
     chat_logs_data = settings["log"]["chats"]
     event_logs_data = settings["log"]["events"]

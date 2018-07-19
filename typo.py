@@ -8,6 +8,7 @@ from random import choice
 alphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
 vowels = "aeiouy"
 
+
 def spin_content(content):
     start = content.find("{")
     end = content.find("}")
