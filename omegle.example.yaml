@@ -1,6 +1,6 @@
 debug: true
 enable_logs: true
-threads: 10
+threads: 1
 enable_proxies: false
 proxy_source:
 bot_match: this is my bot # Will disconnect if a reply contains this string
