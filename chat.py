@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""Chat module"""
+
 import asyncio
 import json
 import random
@@ -5,6 +10,7 @@ import time
 
 import handler
 import util
+import typo
 
 
 class Chat(object):
@@ -123,8 +129,8 @@ class Chat(object):
                 pass
             else:
                 for segment, reply in enumerate(segments):
-                    await self.prepare_reply(segment, reply)
                     await asyncio.sleep(random.uniform(1.0, 3.0))
+                    await self.prepare_reply(segment, reply)
         if self.reply_id == self.last_reply_id:
             self.log(f"conversation completed")
             self.manager.completed += 1
@@ -139,7 +145,7 @@ class Chat(object):
             "bot_match": "[bot_match]"
         }
         reply = reply.replace(safe["bot_match"], self.manager.bot_match)
-        reply = util.generate_typos(util.spin_content(reply), safe)
+        reply = typo.generate_typos(typo.spin_content(reply), safe)
         self.log(f"simulating typing for reply[{self.reply_id}][{segment}]")
         asyncio.ensure_future(self.typing())
         wait_for = float(len(reply)) / random.uniform(6.0, 11.0)
