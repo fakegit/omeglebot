@@ -32,10 +32,10 @@ class Handler(EventHandler):
         self.stranger_typing = False
         if message:
             client.manager.blacklist.append(client.manager.bot_match)
-            if message in blacklist:
+            if message in client.manager.blacklist:
                 client.disconnect()
                 return
-            client.log("received message")
+            client.log(f"received message: {message}")
             await client.send_reply()
 
     async def strangerDisconnected(self, client, var):
