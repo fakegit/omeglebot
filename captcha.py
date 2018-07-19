@@ -26,7 +26,7 @@ class AntiCaptcha(object):
         return balance
 
     async def solve_captcha(self, sitekey, pageurl):
-        fields = {
+        payload = {
             "clientKey": self.api_key,
             "task": {
                 "type": "NoCaptchaTaskProxyless",
@@ -37,18 +37,18 @@ class AntiCaptcha(object):
             "languagePool": "en",
         }
         response = await post_request(
-            f"{self.api_url}/createTask", json=fields
+            f"{self.api_url}/createTask", json=payload
         )
         j = json.loads(response)
         taskId = j["taskId"]
         errorId = int(j["errorId"])
         if errorId > 1:
             return
-        fields = {"clientKey": self.api_key, "taskId": taskId}
+        payload = {"clientKey": self.api_key, "taskId": taskId}
         time.sleep(10)
         for i in range(10):
             response = await post_request(
-                f"{self.api_url}/getTaskResult", json=fields
+                f"{self.api_url}/getTaskResult", json=payload
             )
             j = json.loads(response)
             if j["status"] == "processing":
@@ -64,13 +64,13 @@ class TwoCaptcha(object):
         self.api_key = api_key
 
     async def solve_captcha(self, googlekey, pageurl):
-        fields = {
+        payload = {
             "key": self.api_key,
             "method": "userrecaptcha",
             "googlekey": googlekey,
             "pageurl": pageurl,
         }
-        response = await get_request(f"{self.api_url}/in.php", payload=fields)
+        response = await get_request(f"{self.api_url}/in.php", data=payload)
         if 'ERROR' not in response:
             cap_id = response.split("|")[-1]
             fields = {"key": self.api_key, "action": "get", "id": cap_id}

@@ -6,12 +6,12 @@
 import aiohttp
 
 
-async def post_request(url, payload=None, json=None, proxy=None, timeout=180):
+async def post_request(url, data=None, json=None, proxy=None, timeout=180):
     async with aiohttp.ClientSession() as session:
         try:
             async with session.post(
                 url,
-                data=payload,
+                data=data,
                 json=json,
                 proxy=proxy,
                 timeout=timeout,
@@ -21,12 +21,12 @@ async def post_request(url, payload=None, json=None, proxy=None, timeout=180):
             raise e
 
 
-async def get_request(url, payload=None, json=None, proxy=None, timeout=180):
+async def get_request(url, data=None, json=None, proxy=None, timeout=180):
     async with aiohttp.ClientSession() as session:
         try:
             async with session.get(
                 url,
-                data=payload,
+                data=data,
                 json=json,
                 proxy=proxy,
                 timeout=timeout,

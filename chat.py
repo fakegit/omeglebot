@@ -95,7 +95,7 @@ class Chat(object):
             response = await util.post_request(
                         f"http://{self.server}.omegle.com/{page}",
                         proxy=self.proxy,
-                        payload=payload,
+                        data=payload,
                         timeout=self.manager.connect_timeout,
             )
             return json.loads(response)
