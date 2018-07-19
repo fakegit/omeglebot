@@ -46,13 +46,15 @@ class AntiCaptcha(object):
             return
         payload = {"clientKey": self.api_key, "taskId": taskId}
         time.sleep(10)
-        for i in range(10):
+        while 1:
             response = await post_request(
                 f"{self.api_url}/getTaskResult", json=payload
             )
             j = json.loads(response)
             if j["status"] == "processing":
                 time.sleep(5)
+            elif errorId > 1:
+                return
             else:
                 break
         return j["solution"]["gRecaptchaResponse"]
