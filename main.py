@@ -40,7 +40,6 @@ async def load_proxies():
     while 1:
         manager.logger.debug("Loading proxies")
         try:
-            await lock.acquire()
             async with aiohttp.ClientSession() as session:
                 async with session.post(manager.proxy_source) as r:
                     resp = await r.text()
@@ -48,7 +47,6 @@ async def load_proxies():
             continue
         else:
             proxies.add(resp.split("\n"))
-            lock.release()
             manager.logger.debug("Proxies loaded")
             await asyncio.sleep(10 * 60)
 
@@ -97,13 +95,12 @@ async def start_chat():
     server = random.choice(servers)
     proxy = await proxies.get() if manager.enable_proxies else None
     while 1:
-        async with lock:
-            chat = Chat(manager, server, replies, proxy)
-            await chat.start()
-            if manager.enable_proxies:
-                proxies.set_used(proxy)
-                if not chat.connected:
-                    proxy = await proxies.get()
+        chat = Chat(manager, server, replies, proxy)
+        await chat.start()
+        if manager.enable_proxies:
+            proxies.set_used(proxy)
+            if not chat.connected:
+                proxy = await proxies.get()
 
 
 async def main():
