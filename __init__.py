@@ -31,6 +31,3 @@ __all__ = (
     "__version__",
     "version_info",
 )
-
-sys.path.append(os.getcwd())
-package_dir = os.path.dirname(os.path.abspath(__file__))

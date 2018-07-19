@@ -1,46 +1,37 @@
 import aiohttp
+import os
 
 from random import choice
 
-DICTIONARY = "/usr/share/dict/words"
+DICTIONARY = os.path.join("data", "words")
 WORDS = open(DICTIONARY).read()
 
 alphabet = "abcdefghijklmnopqrstuvwxyz0123456789"
 vowels = "aeiouy"
 
 connectives = [
-    "I", "the", "of", "and", "to", "a", "in", "that",
-    "is", "was", "he", "for", "it", "with", "as", "his",
-    "on", "be", "at", "by", "i", "this", "had", "not",
-    "are", "but", "from", "or", "have", "an", "they",
-    "which", "one", "you", "were", "her", "all", "she",
-    "there", "would", "their", "we", "him", "been", "has",
-    "when", "who", "will", "more", "no", "if", "out",
-    "so", "said", "what", "u", "its", "about", "into",
-    "than", "them", "can", "only", "other", "new", "some",
-    "could", "time", "these", "two", "may", "then", "do",
-    "first", "any", "my", "now", "such", "like", "our",
-    "over", "man", "me", "even", "most", "made", "after",
-    "also", "did", "many", "before", "must", "through",
-    "back", "years", "where", "much", "your", "way",
-    "well", "down", "should", "because", "each", "just",
-    "those", "eople", "mr", "how", "too", "little",
-    "state", "good", "very", "make", "world", "still",
-    "own", "see", "men", "work", "long", "get", "here",
-    "between", "both", "life", "being", "under", "never",
-    "day", "same", "another", "know", "while", "last",
-    "might", "us", "great", "old", "year", "off",
-    "come", "since", "against", "go", "came", "right",
-    "used", "take", "three",
-    "whoever", "nonetheless", "therefore", "although",
-    "consequently", "furthermore", "whereas",
-    "nevertheless", "whatever", "however", "besides",
-    "henceforward", "yet", "until", "alternatively",
-    "meanwhile", "notwithstanding", "whenever",
-    "moreover", "despite", "similarly", "firstly",
-    "secondly", "lastly", "eventually", "gradually",
-    "finally", "thus", "hence", "accordingly",
-    "otherwise", "indeed", "though", "unless"
+    "I", "the", "of", "and", "to", "a", "in", "that", "is", "was", "he", "for",
+    "it", "with", "as", "his", "on", "be", "at", "by", "i", "this", "had",
+    "not", "are", "but", "from", "or", "have", "an", "they", "which", "one",
+    "you", "were", "her", "all", "she", "there", "would", "their", "we", "him",
+    "been", "has", "when", "who", "will", "more", "no", "if", "out", "so",
+    "said", "what", "u", "its", "about", "into", "than", "them", "can", "only",
+    "other", "new", "some", "could", "time", "these", "two", "may", "then",
+    "do", "first", "any", "my", "now", "such", "like", "our", "over", "man",
+    "me", "even", "most", "made", "after", "also", "did", "many", "before",
+    "must", "through", "back", "years", "where", "much", "your", "way", "well",
+    "down", "should", "because", "each", "just", "those", "eople", "mr", "how",
+    "too", "little", "state", "good", "very", "make", "world", "still", "own",
+    "see", "men", "work", "long", "get", "here", "between", "both", "life",
+    "being", "under", "never", "day", "same", "another", "know", "while",
+    "last", "might", "us", "great", "old", "year", "off", "come", "since",
+    "against", "go", "came", "right", "used", "take", "three", "whoever",
+    "nonetheless", "therefore", "although", "consequently", "furthermore",
+    "whereas", "nevertheless", "whatever", "however", "besides",
+    "henceforward", "yet", "until", "alternatively", "meanwhile",
+    "notwithstanding", "whenever",  "moreover", "despite", "similarly",
+    "firstly", "secondly", "lastly", "eventually", "gradually", "finally",
+    "thus", "hence", "accordingly", "otherwise", "indeed", "though", "unless"
 ]
 
 
