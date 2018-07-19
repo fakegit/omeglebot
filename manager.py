@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""Manager module"""
+
 import logging
 import sys
 import time
@@ -14,7 +16,6 @@ try:
 except FileNotFoundError:
     print("No config file (omegle.yaml) in directory")
     sys.exit(0)
-
 
 FORMAT = "%(asctime)s %(message)s"
 logging.basicConfig(format=FORMAT)

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+"""Main module"""
+
 import aiohttp
 import asyncio
 import random
