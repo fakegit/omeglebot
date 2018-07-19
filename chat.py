@@ -123,7 +123,6 @@ class Chat(object):
                 pass
             else:
                 for segment, reply in enumerate(segments):
-                    print(reply)
                     await self.prepare_reply(segment, reply)
                     await asyncio.sleep(random.uniform(1.0, 3.0))
         if self.reply_id == self.last_reply_id:
