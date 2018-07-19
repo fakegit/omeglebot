@@ -13,13 +13,17 @@ from manager import Manager
 from chat import Chat
 from proxy import ProxyDB
 
+lock = asyncio.Lock()
 manager = Manager()
-proxies = ProxyDB(manager.used_timeout, manager.banned_timeout)
+if manager.enable_proxies:
+    proxies = ProxyDB(manager.used_timeout, manager.banned_timeout)
 
+# Replies parser
 d = ConfigParser()
 d.read(manager.responses_data)
 replies = dict((section, dict(d.items(section))) for section in d.sections())
 
+# Omegle chat servers
 servers = ["front1", "front2", "front3", "front4",
            "front5", "front6", "front7", "front8",
            "front9", "front10", "front11", "front12",
@@ -32,8 +36,9 @@ servers = ["front1", "front2", "front3", "front4",
 
 async def load_proxies():
     while 1:
-        print("Loading proxies")
+        manager.logger.debug("Loading proxies")
         try:
+            await lock.acquire()
             async with aiohttp.ClientSession() as session:
                 async with session.post(manager.proxy_source) as r:
                     resp = await r.text()
@@ -41,7 +46,8 @@ async def load_proxies():
             continue
         else:
             proxies.add(resp.split("\n"))
-            print("Proxies loaded")
+            lock.release()
+            manager.logger.debug("Proxies loaded")
             await asyncio.sleep(10 * 60)
 
 
@@ -87,20 +93,21 @@ async def stats():
 
 async def start_chat():
     server = random.choice(servers)
-    proxy = await proxies.get()
+    proxy = await proxies.get() if manager.enable_proxies else None
     while 1:
-        chat = Chat(manager, server, replies, proxy)
-        await chat.start()
-        proxies.set_used(proxy)
-        if not chat.connected:
-            proxy = await proxies.get()
+        async with lock:
+            chat = Chat(manager, server, replies, proxy)
+            await chat.start()
+            if manager.enable_proxies:
+                proxies.set_used(proxy)
+                if not chat.connected:
+                    proxy = await proxies.get()
 
 
 async def main():
     asyncio.ensure_future(stats())
-    asyncio.ensure_future(load_proxies())
-    while not proxies:
-        await asyncio.sleep(1)
+    if manager.enable_proxies:
+        asyncio.ensure_future(load_proxies())
     for i in range(manager.threads):
         asyncio.ensure_future(start_chat())
 

@@ -29,6 +29,7 @@ class Manager(object):
         logger.setLevel("DEBUG")
     # Main settings
     threads = settings["threads"]
+    enable_proxies = settings["enable_proxies"]
     proxy_source = settings["proxy_source"]
     enable_logs = settings["enable_logs"]
     bot_match = settings["bot_match"]

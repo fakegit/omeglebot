@@ -20,7 +20,7 @@ class Chat(object):
         self.manager = manager
         self.server = server
         self.replies = replies[random.choice(list(replies.keys()))]
-        self.proxy = f"http://{proxy}"
+        self.proxy = f"http://{proxy}" if proxy else None
         self.events = asyncio.Queue()
         self.handler = handler.Handler()
 
@@ -149,4 +149,4 @@ class Chat(object):
         self.log(f"sent reply[{self.reply_id}][{segment}]")
 
     def log(self, message):
-        self.manager.logger.critical(f"{self.session_id} {message}")
+        self.manager.logger.debug(f"{self.session_id} {message}")
