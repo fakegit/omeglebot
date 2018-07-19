@@ -15,7 +15,6 @@ from manager import Manager
 from chat import Chat
 from proxy import ProxyDB
 
-lock = asyncio.Lock()
 manager = Manager()
 if manager.enable_proxies:
     proxies = ProxyDB(manager.used_timeout, manager.banned_timeout)
