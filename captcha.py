@@ -77,7 +77,7 @@ class TwoCaptcha(object):
             time.sleep(15)
             for i in range(10):
                 response = await get_request(
-                    f"{self.api_url}/res.php", payload=fields
+                    f"{self.api_url}/res.php", data=payload
                 )
                 if response in ["CAPCHA_NOT_READY", "ERROR_NO_SLOT_AVAILABLE"]:
                     time.sleep(5)
