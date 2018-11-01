@@ -44,7 +44,8 @@ class Chat(object):
         )
         page = (
             f"/start?"
-            f"caps=recaptcha2&firstevents=1&spid=&randid={randid}&lang=en"
+            f"caps=recaptcha2&firstevents=1&spid=&randid={randid}&"
+            f"lang={self.manager.chat_language}"
         )
         j = await self.open_page(page)
         if j:
@@ -129,6 +130,12 @@ class Chat(object):
                 pass
             else:
                 for segment, reply in enumerate(segments):
+                    if len(self.manager.reply_delay.split(",")) == 2:
+                        start, end = [
+                            float(x) for x in self.manager.reply_delay.split(",")
+                        ]
+                    else:   
+                        start, end = (1.0, 3.0)
                     await asyncio.sleep(random.uniform(1.0, 3.0))
                     await self.prepare_reply(segment, reply)
         if self.reply_id == self.last_reply_id:

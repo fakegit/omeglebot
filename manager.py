@@ -45,6 +45,9 @@ class Manager(object):
     solve_captchas = settings["captcha"]["solve_captchas"]
     captcha_service = settings["captcha"]["service"]
     api_key = settings["captcha"][captcha_service]["api_key"]
+    # Miscellaneous chat settings
+    chat_language = settings["language"]
+    reply_delay = settings["reply_delay"]
     if captcha_service == "anticaptcha":
         service = captcha.AntiCaptcha(api_key)
     else:
