@@ -3,9 +3,9 @@ enable_logs: true
 threads: 1
 enable_proxies: false
 proxy_source:
-bot_match: this is my bot # Will disconnect if a reply contains this string
+bot_match: this is my bot # will disconnect if a reply contains this string
 language: en # de, fr, nl, ja, zh
-reply_delay: 1.0, 3.0 # random range between 1 and 3 e.q. 2.3
+reply_delay: 1.0, 3.0 # random number from range 1-3 e.q. 2.3
 
 chat_timeout:
     connect: 15
