@@ -48,7 +48,6 @@ class Chat(object):
             f"caps=recaptcha2&firstevents=1&spid=&randid={randid}&"
             f"lang={self.manager.chat_language}&topics={topics}"
         )
-        print(page)
         j = await self.open_page(page)
         if j:
             if "clientID" in j:
