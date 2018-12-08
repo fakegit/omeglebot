@@ -72,14 +72,13 @@ class TwoCaptcha(object):
             "googlekey": googlekey,
             "pageurl": pageurl,
         }
-        response = await get_request(f"{self.api_url}/in.php", data=payload)
+        response = await post_request(f"{self.api_url}/in.php", data=payload)
         if 'ERROR' not in response:
             cap_id = response.split("|")[-1]
-            payload = {"key": self.api_key, "action": "get", "id": cap_id}
-            time.sleep(15)
+            params = f"key={self.api_key}&action=get&id={cap_id}"
             for i in range(10):
                 response = await get_request(
-                    f"{self.api_url}/res.php", data=payload
+                    f"{self.api_url}/res.php?{params}"
                 )
                 if response in ["CAPCHA_NOT_READY", "ERROR_NO_SLOT_AVAILABLE"]:
                     time.sleep(5)
