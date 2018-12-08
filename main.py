@@ -36,18 +36,19 @@ servers = ["front1", "front2", "front3", "front4",
 
 
 async def load_proxies():
-    while 1:
-        manager.logger.debug("Loading proxies")
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.post(manager.proxy_source) as r:
-                    resp = await r.text()
-        except Exception:
-            continue
-        else:
-            proxies.add(resp.split("\n"))
-            manager.logger.debug("Proxies loaded")
-            await asyncio.sleep(10 * 60)
+    if manager.proxy_source:
+        while 1:
+            manager.logger.debug("Loading proxies")
+            try:
+                async with aiohttp.ClientSession() as session:
+                    async with session.post(manager.proxy_source) as r:
+                        resp = await r.text()
+            except Exception:
+                continue
+            else:
+                proxies.add(resp.split("\n"))
+                manager.logger.debug("Proxies loaded")
+                await asyncio.sleep(10 * 60)
 
 
 async def stats():

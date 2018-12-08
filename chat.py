@@ -42,11 +42,13 @@ class Chat(object):
         randid = "".join(
             random.choice("23456789ABCDEFGHJKLMNPQRSTUVWXYZ") for x in range(8)
         )
+        topics = json.dumps(self.manager.topics.split(','))
         page = (
             f"/start?"
             f"caps=recaptcha2&firstevents=1&spid=&randid={randid}&"
-            f"lang={self.manager.chat_language}"
+            f"lang={self.manager.chat_language}&topics={topics}"
         )
+        print(page)
         j = await self.open_page(page)
         if j:
             if "clientID" in j:
@@ -134,7 +136,7 @@ class Chat(object):
                         start, end = [
                             float(x) for x in self.manager.reply_delay.split(",")
                         ]
-                    else:   
+                    else:
                         start, end = (1.0, 3.0)
                     await asyncio.sleep(random.uniform(1.0, 3.0))
                     await self.prepare_reply(segment, reply)

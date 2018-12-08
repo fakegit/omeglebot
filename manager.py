@@ -48,6 +48,7 @@ class Manager(object):
     # Miscellaneous chat settings
     chat_language = settings["language"]
     reply_delay = settings["reply_delay"]
+    topics = settings["topics"]
     if captcha_service == "anticaptcha":
         service = captcha.AntiCaptcha(api_key)
     else:

@@ -75,7 +75,7 @@ class TwoCaptcha(object):
         response = await get_request(f"{self.api_url}/in.php", data=payload)
         if 'ERROR' not in response:
             cap_id = response.split("|")[-1]
-            fields = {"key": self.api_key, "action": "get", "id": cap_id}
+            payload = {"key": self.api_key, "action": "get", "id": cap_id}
             time.sleep(15)
             for i in range(10):
                 response = await get_request(
